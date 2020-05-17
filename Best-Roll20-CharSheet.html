@@ -1,0 +1,331 @@
+<!-- Bildlogotyp: https://drive.google.com/open?id=1gHAv3T3fICuTe64TjTmcEAZrDgpMHmiS 
+
+<img src="https://drive.google.com/open?id=1gHAv3T3fICuTe64TjTmcEAZrDgpMHmiS" />
+
+-->
+
+<input class="hidden" type="number" name="attr_stymod"/>
+<input class="hidden" type="number" name="attr_rormod"/>
+<input class="hidden" type="number" name="attr_fysmod"/>
+<input class="hidden" type="number" name="attr_lismod"/>
+<input class="hidden" type="number" name="attr_vismod"/>
+<input class="hidden" type="number" name="attr_karmod"/>
+
+<input class="hidden" type="text" name="attr_roll"/>
+
+<h1 class="titel">BEST - Monsterjägarrollspelet</h1>
+
+<br><br>
+
+<!-- Namn, smeknamn, titlar, tilltal, ordnar, et cetera. -->
+
+<!-- Erfarenhet --><!-- Nivå -->
+<div class="level">
+    <div class="xp">
+        <label>Namn</label>
+        <input class="name" name="attr_character_name" type="textarea" />
+    </div>
+    <div class="xp">
+        <label>XP</label>
+        <input type="number" name="attr_xp" value="0" />
+    </div>
+    <div class="xp">
+        <label>Nivå</label>
+        <input type="number" name="attr_level" value="1" />    
+    </div>
+</div>
+
+<br><br>
+
+<!-- Egenskaper -->
+<div class="egenskaper">
+    <div class="cell">
+        <label>Styrka</label>
+        <input type="radio" value="1" name="attr_specialisation" />
+        <input type="number" name="attr_sty" value="0" /><br>
+        <button type="roll" value="@{roll}@{stymod}" name="roll_sty"></button>
+    </div>
+
+    <div class="cell">
+        <label>Rörlighet</label>
+        <input type="radio" value="2" name="attr_specialisation" />
+        <input type="number" name="attr_ror" value="0" /><br>
+        <button type="roll" value="@{roll}@{rormod}" name="roll_ror"></button>
+    </div>
+
+    <div class="cell">
+        <label>Fysik</label>
+        <input type="radio" value="3" name="attr_specialisation" />
+        <input type="number" name="attr_fys" value="0" /><br>
+        <button type="roll" value="@{roll}@{fysmod}" name="roll_fys"></button>
+    </div>
+    
+    <div class="cell">
+        <label>List</label>
+        <input type="radio" value="4" name="attr_specialisation" />
+        <input type="number" name="attr_lis" value="0" /><br>
+        <button type="roll" value="@{roll}@{lismod}" name="roll_lis"></button>
+    </div>
+    
+    <div class="cell">
+        <label>Visdom</label>
+        <input type="radio" value="5" name="attr_specialisation" />
+        <input type="number" name="attr_vis" value="0" /><br>
+        <button type="roll" value="@{roll}@{vismod}" name="roll_vis"></button>
+    </div>
+    
+    <div class="cell">
+        <label>Karisma</label>
+        <input type="radio" value="6" name="attr_specialisation" />
+        <input type="number" name="attr_kar" value="0" /><br>
+        <button type="roll" value="@{roll}@{karmod}" name="roll_kar"></button>
+    </div>    
+</div>
+
+<br><br>
+
+<label>Anteckningar</label>
+<textarea name="attr_anteckningar" class="anteckningar" rows="1"></textarea>
+
+<br><br>
+
+<!-- Rulla tärning! -->
+<label>För- eller nackdelar</label>
+
+<div class="rulla">
+    <div class="cell">
+        <label>-3</label>
+        <input type="radio" value="-3" name="attr_advantage" />
+    </div>
+    <div class="cell">
+        <label>-2</label>
+        <input type="radio" value="-2" name="attr_advantage" />
+    </div>        
+    <div class="cell">
+        <label>-1</label>
+        <input type="radio" value="-1" name="attr_advantage" />
+    </div>        
+    <div class="cell">
+        <label>0</label>
+        <input type="radio" value="0" name="attr_advantage" checked="true" />
+    </div>
+    <div class="cell">
+        <label>+1</label>
+        <input type="radio" value="1" name="attr_advantage" />
+    </div>
+    <div class="cell">
+        <label>+2</label>
+        <input type="radio" value="2" name="attr_advantage" />
+    </div>
+    <div class="cell">
+        <label>+3</label>
+        <input type="radio" value="3" name="attr_advantage" />
+    </div>    
+</div>
+
+<br><br><br><br><br>
+
+<!-- Kroppspoäng --><!-- Max Kroppspoäng -->
+<div class="level">
+    <div class="xp">
+        <label>KP</label>
+        <input type="number" name="attr_kp" value="0" />
+    </div>
+    
+    <div class="xp">
+        <label>Max</label>
+        <input type="number" name="attr_maxkp" value="0" />
+    </div>
+</div>
+
+<br><br>
+
+<!-- Prylar -->
+<label>Prylar</label>
+<input class="name" name="attr_pryl1" type="textarea" />
+<input class="name" name="attr_pryl2" type="textarea" />
+<input class="name" name="attr_pryl3" type="textarea" />
+<input class="name" name="attr_pryl4" type="textarea" />
+<input class="name" name="attr_pryl5" type="textarea" />
+<input class="name" name="attr_pryl6" type="textarea" />
+<input class="name" name="attr_pryl7" type="textarea" />
+<input class="name" name="attr_pryl8" type="textarea" />
+<input class="name" name="attr_pryl9" type="textarea" />
+<input class="name" name="attr_pryl10" type="textarea" />
+
+
+<!-- Scripts -->
+<script type="text/worker">
+
+// XP and Leveling
+on("sheet:opened change:xp", function() {
+    getAttrs(["xp"], function(values) {
+        let xp = parseInt(values.xp,10)||0;
+        let lvl = 1;
+        
+        if(xp >= 100)
+            lvl = 2;
+            
+        if(xp >= 300)
+            lvl = 3;
+            
+        if(xp >= 600)
+            lvl = 4;
+            
+        if(xp >= 1000)
+            lvl = 5;
+            
+        if(xp >= 1500)
+            lvl = 6;
+            
+        if(xp >= 2100)
+            lvl = 7;
+            
+        if(xp >= 2800)
+            lvl = 8;
+            
+        if(xp >= 3600)
+            lvl = 9;
+            
+        if(xp >= 4500)
+            lvl = 10;
+            
+        setAttrs({
+            level: lvl
+        });
+    });
+});
+
+// Roll Composition (Advantage/Disadvantage)
+on("sheet:opened change:advantage", function() {
+    getAttrs(["advantage"], function(values) {
+        let ad = parseInt(values.advantage,10)||0;
+        
+        if(ad < 0)
+        {
+            let abs = Math.abs(ad) +1;
+            let r = "/roll " + abs + "d20kl1+";
+            
+            setAttrs({
+                roll: r
+            });
+        }
+        
+        if(ad > 0)
+        {
+            let r = "/roll " + (ad +1) + "d20k1+";
+            setAttrs({
+                roll: r
+            });
+        }
+        
+        if(ad == 0)
+        {
+            setAttrs({
+                roll: "/roll 1d20+"
+            });
+        }
+    });
+});
+
+
+// Specialisation and mod assignment.
+on("change:specialisation change:sty change:ror change:fys change:lis change:vis change:kar sheet:opened", function() {
+    getAttrs(["specialisation", "level", "sty", "ror", "fys", "lis", "vis", "kar"], function(values) {
+        let spec = parseInt(values.specialisation,10)||0;
+        let lvl = parseInt(values.level,10)||0;
+        
+        let sty = parseInt(values.sty,10)||0;
+        let ror = parseInt(values.ror,10)||0;
+        let fys = parseInt(values.fys,10)||0;
+        let lis = parseInt(values.lis,10)||0;
+        let vis = parseInt(values.vis,10)||0;
+        let kar = parseInt(values.kar,10)||0;
+
+        if(spec == 1)
+        {
+            let newSty = sty + lvl;
+            setAttrs({
+                stymod: newSty
+            });
+        }
+        else
+        {
+            setAttrs({
+                stymod: sty
+            });
+        }
+        
+        if(spec == 2)
+        {
+            let newRor = ror + lvl;
+            setAttrs({
+                rormod: newRor
+            });
+        }
+        else
+        {
+            setAttrs({
+                rormod: ror
+            });
+        }
+        
+        if(spec == 3)
+        {
+            let newFys = fys + lvl;
+            setAttrs({
+                fysmod: newFys
+            });
+        }
+        else
+        {
+            setAttrs({
+                fysmod: fys
+            });
+        }        
+        
+        if(spec == 4)
+        {
+            let newLis = lis + lvl;
+            setAttrs({
+                lismod: newLis
+            });
+        }
+        else
+        {
+            setAttrs({
+                lismod: lis
+            });
+        }
+        
+        if(spec == 5)
+        {
+            let newVis = vis + lvl;
+            setAttrs({
+                vismod: newVis
+            });
+        }
+        else
+        {
+            setAttrs({
+                vismod: vis
+            });
+        }        
+        
+        if(spec == 6)
+        {
+            let newKar = kar + lvl;
+            setAttrs({
+                karmod: newKar
+            });
+        }
+        else
+        {
+            setAttrs({
+                karmod: kar
+            });
+        }
+    });
+});
+
+</script>
